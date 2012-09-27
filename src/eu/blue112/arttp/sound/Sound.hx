@@ -8,6 +8,5 @@ class Sound
 	}
 }
 
-@:sound("lib/sfx/bgm.mp3")
-class Bgm extends flash.media.Sound {
-}
+//@:sound("lib/sfx/bgm.mp3")
+class Bgm extends flash.media.Sound {}

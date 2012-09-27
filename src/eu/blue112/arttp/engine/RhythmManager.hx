@@ -45,12 +45,12 @@ class RhythmManager
 			}
 			else
 			{
-				return TOO_SOON(diff - (tick + tolerance));
+				return TOO_LATE(diff - tick);
 			}
 		}
 		else
 		{
-			return TOO_LATE((tick - tolerance) - diff);
+			return TOO_SOON(tick - diff);
 		}
 
 	}
