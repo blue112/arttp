@@ -3,6 +3,8 @@ package eu.blue112.arttp;
 import flash.display.Sprite;
 import flash.events.KeyboardEvent;
 
+import eu.blue112.arttp.sound.Sound;
+
 import eu.blue112.arttp.engine.RhythmManager;
 
 class Game extends Sprite
@@ -17,6 +19,9 @@ class Game extends Sprite
 		super();
 
 		flash.Lib.current.addChild(this);
+
+		var s = new Bgm();
+		s.play();
 
 		stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 		stage.align = flash.display.StageAlign.TOP_LEFT;
