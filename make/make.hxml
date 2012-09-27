@@ -1,0 +1,3 @@
+-main eu.blue112.arttp.Game
+-cp src
+-swf bin/arttp.swf
