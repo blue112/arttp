@@ -1,3 +1,4 @@
 -main eu.blue112.arttp.Game
 -cp src
 -swf bin/arttp.swf
+-swf-header 800:600:30:FFFFFF
