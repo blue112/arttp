@@ -23,6 +23,7 @@ class TitleScreen extends Sprite
 
 		char = new Char();
 		char.scaleX = char.scaleY = 4;
+		char.speed = 7;
 		char.filters = [new GlowFilter(0xFFFFFF, 0.2, 10, 10, 2, 3)];
 		char.x = (Game.GAME_WIDTH - char.width) / 2;
 		char.y = Game.GAME_HEIGHT - char.height - 50;
@@ -36,8 +37,23 @@ class TitleScreen extends Sprite
 		var min_x = Game.GAME_WIDTH - background.width;
 		var max_x = 0;
 
+		var end_x = 1000;
+
 		x = -(char.x - (Game.GAME_WIDTH - char.width) / 2);
 		x = Math.max(x, min_x);
 		x = Math.min(x, max_x);
+
+		if (char.x > end_x - 700)
+		{
+			background.alpha = (end_x - char.x) / 700;
+		}
+
+		if (char.x > end_x)
+		{
+			removeEventListener(Event.ENTER_FRAME, followChar);
+			removeChild(char);
+
+			dispatchEvent(new Event(Event.COMPLETE));
+		}
 	}
 }

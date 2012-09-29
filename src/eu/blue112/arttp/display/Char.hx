@@ -23,6 +23,8 @@ class Char extends Sprite
 
 	var char:Bitmap;
 
+	public var speed:Int;
+
 	static public var LEFT:String = "left";
 	static public var RIGHT:String = "right";
 	static public var DOWN:String = "down";
@@ -35,6 +37,8 @@ class Char extends Sprite
 
 		bitmap_data = new Hash();
 		char = new Bitmap();
+
+		speed = 4;
 
 		var charset = new CharGfx(0, 0, true, 0);
 
@@ -74,6 +78,12 @@ class Char extends Sprite
 		playAnimation(DOWN);
 
 		addEventListener(Event.ENTER_FRAME, animate);
+		addEventListener(Event.REMOVED_FROM_STAGE, disable);
+	}
+
+	private function disable(_)
+	{
+		removeEventListener(Event.ENTER_FRAME, animate);
 	}
 
 	public function playAnimation(direction:String):Void
@@ -91,15 +101,15 @@ class Char extends Sprite
 
 	private function animate(e:Event):Void
 	{
-		var speed = 7;
-
 		if (KeyManager.isDown(Keyboard.UP))
 		{
 			playAnimation(UP);
+			y -= speed;
 		}
 		else if (KeyManager.isDown(Keyboard.DOWN))
 		{
 			playAnimation(DOWN);
+			y += speed;
 		}
 		else if (KeyManager.isDown(Keyboard.LEFT))
 		{
