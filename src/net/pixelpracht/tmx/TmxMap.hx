@@ -58,6 +58,14 @@ class TmxMap
 		}
 	}
 
+	public function reset():Void
+	{
+		for (i in orderedLayers)
+		{
+			i.reset();
+		}
+	}
+
 	public function pointFromTile(x:Int, y:Int, ?center:Bool):Point
 	{
 		if (center)
@@ -79,13 +87,9 @@ class TmxMap
 		return (pos > (tileSize / 2) - 10 && pos < (tileSize / 2) + 10);
 	}
 
-	public function tileFromPoint(point:Point, ?center:Bool):IntPoint
+	public function tileFromPoint(point:Point):IntPoint
 	{
-		var pt =
-			if (!center)
-				new IntPoint(Math.floor(point.x / tileWidth), Math.floor(point.y / tileHeight));
-			else
-				new IntPoint(Math.floor((point.x + tileWidth / 2) / tileWidth), Math.floor((point.y + tileHeight / 2) / tileHeight));
+		var pt = new IntPoint(Math.floor(point.x / tileWidth), Math.floor(point.y / tileHeight));
 
 		if (pt.x < 0) pt.x = 0;
 		else if (pt.x >= width) pt.x = width - 1;

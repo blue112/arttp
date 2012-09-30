@@ -6,12 +6,14 @@ import flash.media.Sound;
 
 class Sound
 {
-	public static inline var AMP_MULTIPLIER:Float = 0.10;
+	public static inline var AMP_MULTIPLIER:Float = 0.1;
 	public static var SAMPLING_RATE:Int = 44100 * 3;
 	public static var TWO_PI:Float = 2 * Math.PI;
 	public static var TWO_PI_OVER_SR:Float = TWO_PI/SAMPLING_RATE;
 
 	public var freq:Int;
+
+	public var tickOn:Int;
 
 	public function new()
 	{
@@ -20,12 +22,14 @@ class Sound
 		sound.addEventListener(SampleDataEvent.SAMPLE_DATA, getSamples);
 	  	var ch = sound.play();
 
-	  	//haxe.Timer.delay(ch.stop, time);
-	}
+	  	tickOn = 6;
 
-	static public function generate(freq:Int, time:Int)
-	{
-		//new Sound(freq, time);
+	  	trace(flash.system.Capabilities.version.split(",")[1]);
+
+	  	if (flash.system.Capabilities.version.split(",")[1] == "4")
+	  	{
+	  		tickOn = 4;
+	  	}
 	}
 
 	private function getSamples(event:SampleDataEvent):Void
@@ -40,8 +44,7 @@ class Sound
 		if (begin) freq = 659;
 		else freq = 440;
 
-		//if (pos % 8 == 7) //Weirdly, making ticking it one event before makes it sync.
-		if (pos % 8 == 6) //Weirdly, making ticking it one event before makes it sync.
+		if (pos % 8 == tickOn) //Works fine for Chrome & Linux
 			Game.tick();
 
 		for (i in 0...8192)
@@ -62,5 +65,5 @@ class Sound
 	}
 }
 
-//@:sound("lib/sfx/bgm.mp3")
+@:sound("lib/sfx/bgm.mp3")
 class Bgm extends flash.media.Sound {}

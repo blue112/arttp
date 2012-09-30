@@ -8,6 +8,8 @@ import flash.events.Event;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
+import caurina.transitions.Tweener;
+
 import eu.blue112.arttp.engine.KeyManager;
 
 @:bitmap("lib/gfx/main_char.png")
@@ -25,11 +27,15 @@ class Char extends Sprite
 
 	public var speed:Int;
 
+	var hitbox:Sprite;
+
 	static public var LEFT:String = "left";
 	static public var RIGHT:String = "right";
 	static public var DOWN:String = "down";
 	static public var UP:String = "up";
 	static public var STATIC:String = "static";
+
+	static public var CENTER_POINT:Point = new Point(10, 45);
 
 	public function new()
 	{
@@ -79,6 +85,25 @@ class Char extends Sprite
 
 		addEventListener(Event.ENTER_FRAME, animate);
 		addEventListener(Event.REMOVED_FROM_STAGE, disable);
+
+		hitbox = new Sprite();
+		hitbox.graphics.beginFill(0xFF0000, 0.5);
+		hitbox.graphics.drawRect(25, 70, 20, 20);
+		hitbox.visible = false;
+		addChild(hitbox);
+	}
+
+	public function say(text:String)
+	{
+		var t = new PixelTextField(text, {color:0xFFFFFF, size:20});
+		t.width = 250;
+		t.wordWrap = t.multiline = true;
+		t.filters = [new flash.filters.GlowFilter(0, 0.5, 5, 5, 10, 2)];
+		t.x = 70;
+		t.y = 10;
+		addChild(t);
+
+		Tweener.addTween(t, {delay:2, time:2, transition:"easeInQuad", y:-30, alpha:0, onComplete:callback(removeChild, t)});
 	}
 
 	private function disable(_)
@@ -101,30 +126,7 @@ class Char extends Sprite
 
 	private function animate(e:Event):Void
 	{
-		if (KeyManager.isDown(Keyboard.UP))
-		{
-			playAnimation(UP);
-			y -= speed;
-		}
-		else if (KeyManager.isDown(Keyboard.DOWN))
-		{
-			playAnimation(DOWN);
-			y += speed;
-		}
-		else if (KeyManager.isDown(Keyboard.LEFT))
-		{
-			playAnimation(LEFT);
-			x -= speed;
-		}
-		else if (KeyManager.isDown(Keyboard.RIGHT))
-		{
-			playAnimation(RIGHT);
-			x += speed;
-		}
-		else
-		{
-			playAnimation(STATIC);
-		}
+		hitbox.visible = KeyManager.isDown(Keyboard.CONTROL);
 
 		if (currentDirection == STATIC)
 			return;
@@ -134,5 +136,30 @@ class Char extends Sprite
 			currentPlayingIndex = 0;
 
 		char.bitmapData = currentPlaying[Math.floor(currentPlayingIndex / 5)];
+	}
+
+	public inline function setPointFromCenter(pt:Point):Void
+	{
+		pt = pt.subtract(CENTER_POINT);
+
+		this.x = pt.x;
+		this.y = pt.y;
+	}
+
+	public inline function getCollisionPoints(?add_x:Int, ?add_y:Int):Array<Point>
+	{
+		var base = new Point(x + add_x, y + add_y);
+
+		var baseX = 25 * scaleX;
+		var baseY = 70 * scaleY;
+		var w = 20 * scaleX;
+		var h = 20 * scaleY;
+
+		return [
+			base.add(new Point(baseX, baseY)),
+			base.add(new Point(baseX + w, baseY)),
+			base.add(new Point(baseX, baseY + h)),
+			base.add(new Point(baseX + w, baseY + h))
+		];
 	}
 }

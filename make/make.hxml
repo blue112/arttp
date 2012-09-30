@@ -6,3 +6,7 @@
 -lib TweenerHX
 -swf bin/arttp.swf
 -resource lib/map/map0.tmx@map0
+-resource lib/map/map1.tmx@map1
+-resource lib/map/map2.tmx@map2
+-resource lib/map/map3.tmx@map3
+-resource lib/map/map4.tmx@map4

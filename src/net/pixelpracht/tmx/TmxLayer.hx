@@ -10,6 +10,8 @@ import haxe.xml.Fast;
 import flash.display.BitmapData;
 import flash.geom.Point;
 
+using net.pixelpracht.tmx.ArrayTools;
+
 class TmxLayer
 {
 	public var map:TmxMap;
@@ -21,6 +23,7 @@ class TmxLayer
 	public var opacity:Int;
 	public var visible:Bool;
 	public var tileGIDs:Array<Array<Int>>;
+	public var baseGIDs:Array<Array<Int>>;
 	public var properties:TmxPropertySet;
 
 	public function new(source:Fast, parent:TmxMap)
@@ -61,8 +64,15 @@ class TmxLayer
 					var gid:Int = Std.parseInt(node.att.gid);
 					tileGIDs[rowIdx].push(gid);
 				}
+
+				baseGIDs = tileGIDs.deepcopy();
 			}
 		}
+	}
+
+	public function reset()
+	{
+		tileGIDs = baseGIDs.deepcopy();
 	}
 
 	public function drawLayer(bmp:BitmapData):Void

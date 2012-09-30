@@ -10,4 +10,14 @@ class IntPoint
 		this.x = x;
 		this.y = y;
 	}
+
+	public function equals(pt:IntPoint):Bool
+	{
+		return this.x == pt.x && this.y == pt.y;
+	}
+
+	public function toString():String
+	{
+		return "[x="+x+" y="+y+"]";
+	}
 }
