@@ -69,7 +69,7 @@ class Game extends Sprite
 
 		//manager = new RhythmManager(1000, 25);
 
-		if (false)
+		if (true)
 		{
 			var title = new TitleScreen();
 			title.addEventListener(Event.COMPLETE, startGame);
@@ -79,7 +79,6 @@ class Game extends Sprite
 		{
 			startGame(null);
 		}
-
 
 		//Dialog.create(this, "Salut, ca farte ?");
 		//stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -144,7 +143,7 @@ class Game extends Sprite
 		curlevel = 0;
 
 		tickSound = new Sound();
-		loadLevel(5);
+		loadLevel(0);
 	}
 
 	private function unloadLevel():Void
