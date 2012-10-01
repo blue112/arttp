@@ -135,8 +135,8 @@ class Game extends Sprite
 
 	private function startGame(e:Event):Void
 	{
-		var s = new Bgm();
-		s.play(0, 0xFFFF, new SoundTransform(0.5));
+		//var s = new Bgm();
+		//s.play(0, 0xFFFF, new SoundTransform(0.3));
 
 		while (numChildren > 0) removeChildAt(0);
 		addChild(mask);

@@ -32,6 +32,10 @@ class MapRenderer extends Sprite
 	var last_tile:IntPoint;
 	var last_tile_type:TileType;
 
+	var death_counter:Int;
+
+	static public inline var SAIYAN_MODE_LIMIT = 10;
+
 	static private var STARTING_COORD = new IntPoint(1, 10);
 	static public inline var DEAD = "event_char_dead";
 	static public inline var WIN = "event_level_win";
@@ -76,6 +80,7 @@ class MapRenderer extends Sprite
 			addEventListener(Event.ENTER_FRAME, moveChar);
 
 			char.say(tmxmap.properties.text);
+			death_counter = 0;
 
 			inverted_map = tmxmap.properties.has("inverted");
 
@@ -157,7 +162,7 @@ class MapRenderer extends Sprite
 				return;
 		}
 
-		if (ticked && inverted_map)
+		if (ticked && inverted_map && !char.saiyanMode)
 		{
 			add_x = -add_x;
 			add_y = -add_y;
@@ -197,6 +202,9 @@ class MapRenderer extends Sprite
 		{
 			case COLLISION: return false;
 			case DEATH:
+				if (char.saiyanMode)
+					return true;
+
 				onDead();
 				return false;
 			case PASS: return true;
@@ -210,6 +218,9 @@ class MapRenderer extends Sprite
 
 	public function onDead()
 	{
+		if (char.saiyanMode)
+			return;
+
 		var pt = tmxmap.pointFromTile(STARTING_COORD.x, STARTING_COORD.y);
 		char.setPointFromCenter(pt);
 
@@ -224,7 +235,21 @@ class MapRenderer extends Sprite
 		}
 		background.unlock();
 
+		death_counter++;
 		dispatchEvent(new Event(DEAD));
+
+		char.showLifeLeft(Std.int(Math.max(0, SAIYAN_MODE_LIMIT - death_counter)));
+
+		if (death_counter >= SAIYAN_MODE_LIMIT)
+		{
+			haxe.Timer.delay(setSaiyanMode, 1000);
+		}
+	}
+
+	private function setSaiyanMode()
+	{
+		char.setSaiyanMode(true);
+		char.say("Rah ça m'énerve !!! Pouvoir des ombres\nA-C-T-I-V-A-T-I-O-N");
 	}
 
 	private function onWin()

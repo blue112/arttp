@@ -6,7 +6,7 @@ import flash.media.Sound;
 
 class Sound
 {
-	public static inline var AMP_MULTIPLIER:Float = 0.1;
+	public static inline var AMP_MULTIPLIER:Float = 0;
 	public static var SAMPLING_RATE:Int = 44100 * 3;
 	public static var TWO_PI:Float = 2 * Math.PI;
 	public static var TWO_PI_OVER_SR:Float = TWO_PI/SAMPLING_RATE;
@@ -65,5 +65,5 @@ class Sound
 	}
 }
 
-@:sound("lib/sfx/bgm.mp3")
+//@:sound("lib/sfx/bgm.mp3")
 class Bgm extends flash.media.Sound {}

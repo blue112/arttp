@@ -27,6 +27,9 @@ class Char extends Sprite
 	var char:Bitmap;
 
 	public var speed:Int;
+	public var saiyanMode:Bool;
+
+	var talkText:PixelTextField;
 
 	var hitbox:Sprite;
 
@@ -92,19 +95,51 @@ class Char extends Sprite
 		hitbox.graphics.drawRect(25, 70, 20, 20);
 		hitbox.visible = false;
 		addChild(hitbox);
+
+		saiyanMode = false;
+	}
+
+	public function setSaiyanMode(active:Bool)
+	{
+		this.saiyanMode = active;
+
+		if (saiyanMode)
+		{
+			this.filters = [new GlowFilter(0xFFD700, 0.5, 20, 20, 2, 3)];
+		}
+		else
+		{
+			this.filters = [];
+		}
+	}
+
+	public function showLifeLeft(nb:Int)
+	{
+		var left = new PixelTextField(Std.string(nb), {size:40, color:0xFFFFFF});
+		left.x = (char.width - left.width) / 2;
+		left.y = -left.height;
+		addChild(left);
+
+		Tweener.addTween(left, {delay:1, time:1, transition:"easeInQuad", y:-30, alpha:0, onComplete:callback(removeChild, left)});
 	}
 
 	public function say(text:String)
 	{
-		var t = new PixelTextField(text, {color:0xFFFFFF, size:20});
-		t.width = 250;
-		t.wordWrap = t.multiline = true;
-		t.filters = [new flash.filters.GlowFilter(0, 0.5, 5, 5, 10, 2)];
-		t.x = 70;
-		t.y = 10;
-		addChild(t);
+		if (talkText != null && talkText.parent != null)
+		{
+			Tweener.removeTweens(talkText);
+			Tweener.addTween(talkText, {time:1, alpha:0, transition:"easeOutQuint"});
+		}
 
-		Tweener.addTween(t, {delay:2, time:2, transition:"easeInQuad", y:-30, alpha:0, onComplete:callback(removeChild, t)});
+		talkText = new PixelTextField(text, {color:0xFFFFFF, size:20});
+		talkText.width = 250;
+		talkText.wordWrap = talkText.multiline = true;
+		talkText.filters = [new flash.filters.GlowFilter(0, 0.5, 5, 5, 10, 2)];
+		talkText.x = 70;
+		talkText.y = 10;
+		addChild(talkText);
+
+		Tweener.addTween(talkText, {delay:2, time:2, transition:"easeInQuad", y:-30, alpha:0, onComplete:callback(removeChild, talkText)});
 	}
 
 	private function disable(_)
