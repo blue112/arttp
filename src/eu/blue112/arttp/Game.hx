@@ -91,6 +91,11 @@ class Game extends Sprite
 		this.y = (stage.stageHeight - GAME_HEIGHT) / 2;
 	}
 
+	static public function die()
+	{
+		inst.map.onDead();
+	}
+
 	static public function tick()
 	{
 		inst._tick();
@@ -139,7 +144,7 @@ class Game extends Sprite
 		curlevel = 0;
 
 		tickSound = new Sound();
-		loadLevel(4);
+		loadLevel(5);
 	}
 
 	private function unloadLevel():Void

@@ -4,6 +4,7 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.ui.Keyboard;
+import flash.filters.GlowFilter;
 import flash.events.Event;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -146,7 +147,7 @@ class Char extends Sprite
 		this.y = pt.y;
 	}
 
-	public inline function getCollisionPoints(?add_x:Int, ?add_y:Int):Array<Point>
+	public function getCollisionPoints(?add_x:Int, ?add_y:Int):Array<Point>
 	{
 		var base = new Point(x + add_x, y + add_y);
 
@@ -161,5 +162,16 @@ class Char extends Sprite
 			base.add(new Point(baseX, baseY + h)),
 			base.add(new Point(baseX + w, baseY + h))
 		];
+	}
+
+	public function getLaserHitBox():Rectangle
+	{
+		var baseX = 18 * scaleX;
+		var baseY = 24 * scaleY;
+		var w = 36 * scaleX;
+		var h = 67 * scaleY;
+
+		return new Rectangle(baseX + x, baseY + y, w, h);
+
 	}
 }

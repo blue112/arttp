@@ -25,6 +25,8 @@ class MapRenderer extends Sprite
 	var has_tick:Bool;
 	var ticked:Bool; //True : red, false : green
 
+	var lasers:Array<LaserLauncher>;
+
 	var inverted_map:Bool;
 
 	var last_tile:IntPoint;
@@ -76,6 +78,43 @@ class MapRenderer extends Sprite
 			char.say(tmxmap.properties.text);
 
 			inverted_map = tmxmap.properties.has("inverted");
+
+			initLasers();
+		}
+	}
+
+	private function initLasers()
+	{
+		if (lasers != null)
+		{
+			for (i in lasers)
+			{
+				removeChild(i);
+			}
+		}
+
+		Laser.clean();
+
+		var interactive = tmxmap.getLayer("interactive");
+
+		lasers = [];
+
+		for (y in 0...interactive.tileGIDs.length)
+		{
+			for (x in 0...interactive.tileGIDs[y].length)
+			{
+				var tile = interactive.tileGIDs[y][x];
+
+				if (tile == 40 || tile == 50)
+				{
+					var laser = new LaserLauncher(tile, char);
+					laser.x = 32 * x;
+					laser.y = 32 * y;
+					addChild(laser);
+
+					lasers.push(laser);
+				}
+			}
 		}
 	}
 
@@ -169,12 +208,13 @@ class MapRenderer extends Sprite
 		}
 	}
 
-	private function onDead()
+	public function onDead()
 	{
 		var pt = tmxmap.pointFromTile(STARTING_COORD.x, STARTING_COORD.y);
 		char.setPointFromCenter(pt);
 
 		tmxmap.reset();
+		initLasers();
 		ticked = false;
 
 		background.lock();
@@ -213,5 +253,10 @@ class MapRenderer extends Sprite
 
 		has_tick = true;
 		ticked = !ticked;
+
+		for (i in lasers)
+		{
+			i.tick(ticked);
+		}
 	}
 }
