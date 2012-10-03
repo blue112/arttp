@@ -65,5 +65,8 @@ class Sound
 	}
 }
 
-//@:sound("lib/sfx/bgm.mp3")
+@:sound("lib/sfx/bgm.mp3")
 class Bgm extends flash.media.Sound {}
+
+@:sound("lib/sfx/endtitle.mp3")
+class EndTitle extends flash.media.Sound {}

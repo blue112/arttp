@@ -42,9 +42,14 @@ class Game extends Sprite
 	{
 		super();
 
-		inst = this;
+		init();
+	}
 
+	private function init()
+	{
 		flash.Lib.current.addChild(this);
+
+		inst = this;
 
 		var gameMask = new Shape();
 		gameMask.graphics.beginFill(0xFF0000, 0.5);
@@ -53,12 +58,7 @@ class Game extends Sprite
 		this.mask = gameMask;
 		addChild(gameMask);
 
-		flash.Boot.__set_trace_color(0xFFFFFF);
-
 		new KeyManager(); //Init KeyManager
-
-		stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
-		stage.align = flash.display.StageAlign.TOP_LEFT;
 
 		stage.addEventListener(Event.RESIZE, onResize);
 		onResize(null);
@@ -66,8 +66,6 @@ class Game extends Sprite
 		whiteFlash = new Sprite();
 		whiteFlash.graphics.beginFill(0xFFFFFF);
 		whiteFlash.graphics.drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-
-		//manager = new RhythmManager(1000, 25);
 
 		if (true)
 		{
@@ -79,9 +77,6 @@ class Game extends Sprite
 		{
 			startGame(null);
 		}
-
-		//Dialog.create(this, "Salut, ca farte ?");
-		//stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 	}
 
 	private function onResize(_)

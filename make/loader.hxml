@@ -1,0 +1,7 @@
+-main eu.blue112.arttp.loader.GameLoader
+-cp src
+-swf-lib lib/gfx/font.swf
+-swf-header 800:600:30:000000
+-debug
+-swf bin/loader.swf
+-lib TweenerHX

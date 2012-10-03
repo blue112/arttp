@@ -1,7 +1,8 @@
 -main eu.blue112.arttp.Game
 -cp src
 -swf-header 800:600:30:000000
--swf-lib lib/gfx/lib.swf
+-swf-lib lib/gfx/font.swf
+-swf-lib lib/soundlib.swf
 -debug
 -lib TweenerHX
 -swf bin/arttp.swf
