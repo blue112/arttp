@@ -6,7 +6,7 @@ class KeyManager
 {
     static private var keys:Array<Bool>;
 
-    static private var is_lock:Bool = false;
+    static public var is_lock:Bool = false;
     static private var block_until:UInt;
     static private var onKey:Void->Void = null;
 

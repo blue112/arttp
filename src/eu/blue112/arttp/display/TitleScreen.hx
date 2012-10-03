@@ -55,9 +55,15 @@ class TitleScreen extends Sprite
 			char.playAnimation(Char.STATIC);
 		}
 
-		if (char.x + add_x > 0)
+		if (char.x + add_x > -150)
 		{
 			char.x += add_x;
+		}
+		else
+		{
+			var credits = new Credits();
+
+			addChild(credits);
 		}
 	}
 

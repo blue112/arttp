@@ -1,0 +1,27 @@
+Producer
+Character Design
+Programming
+Executive Producer
+Director
+Script and Event Planning
+System Director
+Assistant Director
+Design Managers
+Map Design
+2D Animation
+Screen Design
+Effect Design
+Demo Design
+Programming Directors
+Player Programming
+Main System Programming
+Game System Programming
+Camera Programming
+Enemy Programming
+2D Programming
+Object Programming
+Sound Effect Programming
+Library Programming
+Sound Library Programming
+Progress Management
+Debug Support
