@@ -24,6 +24,12 @@ class Permutations
 		setPermute(58, 59);
 		setPermute(68, 69);
 		setPermute(78, 79);
+		//Red laser (horizontal)
+		setPermute(71, 81);
+		setPermute(72, 82);
+		setPermute(73, 83);
+
+		setPermute(85, 86);
 
 		//96 to 99 : numbers
 		setPermuteOneWay(95, 96);

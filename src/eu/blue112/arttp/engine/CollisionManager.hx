@@ -23,6 +23,7 @@ class CollisionManager
 		//Green laser, ON
 		tileType.set(57, DEATH);
 		tileType.set(67, DEATH);
+		tileType.set(85, DEATH);
 		tileType.set(77, DEATH);
 
 		//Green laser, OFF
@@ -30,15 +31,30 @@ class CollisionManager
 		tileType.set(66, PASS);
 		tileType.set(76, PASS);
 
+		//Tapis
+		tileType.set(24, PASS);
+		tileType.set(25, PASS);
+		tileType.set(34, PASS);
+		tileType.set(35, PASS);
+		tileType.set(44, PASS);
+		tileType.set(45, PASS);
+
 		//Red laser, ON
 		tileType.set(59, DEATH);
 		tileType.set(69, DEATH);
 		tileType.set(79, DEATH);
+		tileType.set(81, DEATH);
+		tileType.set(82, DEATH);
+		tileType.set(86, DEATH);
+		tileType.set(83, DEATH);
 
 		//Red laser, OFF
 		tileType.set(58, PASS);
 		tileType.set(68, PASS);
 		tileType.set(78, PASS);
+		tileType.set(71, PASS);
+		tileType.set(72, PASS);
+		tileType.set(73, PASS);
 
 		tileType.set(20, EMPTY);
 

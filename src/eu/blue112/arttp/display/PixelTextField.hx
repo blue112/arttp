@@ -30,6 +30,6 @@ class PixelTextField extends TextField
 
 		embedFonts = true;
 		text = text.replace("é","e").replace("è","e").replace("ê","e").replace("û","u").replace("ù","u").replace("à","a").replace("â","a").replace("ç","c").replace("ô","o");
-		this.text = text;
+		this.htmlText = text;
 	}
 }

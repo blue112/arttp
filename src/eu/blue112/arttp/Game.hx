@@ -18,7 +18,7 @@ import eu.blue112.arttp.display.Char;
 import eu.blue112.arttp.display.TitleScreen;
 import eu.blue112.arttp.display.GrowingText;
 import eu.blue112.arttp.display.MapRenderer;
-import eu.blue112.arttp.display.Dialog;
+import eu.blue112.arttp.display.PixelTextField;
 
 using eu.blue112.arttp.tools.EventTools;
 
