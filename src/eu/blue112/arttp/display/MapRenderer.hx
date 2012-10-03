@@ -34,7 +34,7 @@ class MapRenderer extends Sprite
 
 	var death_counter:Int;
 
-	static public inline var SAIYAN_MODE_LIMIT = 10;
+	private var saiyanModeLimit:Int;
 
 	static private var STARTING_COORD = new IntPoint(1, 10);
 	static public inline var DEAD = "event_char_dead";
@@ -81,6 +81,15 @@ class MapRenderer extends Sprite
 
 			char.say(tmxmap.properties.text);
 			death_counter = 0;
+
+			if (tmxmap.properties.has("saiyan"))
+			{
+				saiyanModeLimit = Std.parseInt(tmxmap.properties.saiyan);
+			}
+			else
+			{
+				saiyanModeLimit = 5;
+			}
 
 			inverted_map = tmxmap.properties.has("inverted");
 
@@ -238,9 +247,9 @@ class MapRenderer extends Sprite
 		death_counter++;
 		dispatchEvent(new Event(DEAD));
 
-		char.showLifeLeft(Std.int(Math.max(0, SAIYAN_MODE_LIMIT - death_counter)));
+		char.showLifeLeft(Std.int(Math.min(100, (death_counter / saiyanModeLimit) * 100)));
 
-		if (death_counter >= SAIYAN_MODE_LIMIT)
+		if (death_counter >= saiyanModeLimit)
 		{
 			haxe.Timer.delay(setSaiyanMode, 1000);
 		}

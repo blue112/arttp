@@ -115,12 +115,13 @@ class Char extends Sprite
 
 	public function showLifeLeft(nb:Int)
 	{
-		var left = new PixelTextField(Std.string(nb), {size:40, color:0xFFFFFF});
-		left.x = (char.width - left.width) / 2;
+		var left = new PixelTextField("Agacement: <font color='#5297FE'>"+nb+"%</font>", {size:25, color:0xFFFFFF});
+		left.filters = [new flash.filters.GlowFilter(0, 0.5, 5, 5, 10, 2)];
+		left.x = 0;
 		left.y = -left.height;
 		addChild(left);
 
-		Tweener.addTween(left, {delay:1, time:1, transition:"easeInQuad", y:-30, alpha:0, onComplete:callback(removeChild, left)});
+		Tweener.addTween(left, {delay:1, time:1, transition:"easeInQuad", y:left.y + 10, alpha:0, onComplete:callback(removeChild, left)});
 	}
 
 	public function say(text:String)
