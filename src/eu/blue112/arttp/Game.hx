@@ -4,11 +4,13 @@ import flash.display.Sprite;
 import flash.display.Shape;
 import flash.events.KeyboardEvent;
 import flash.events.Event;
+import flash.filters.GlowFilter;
 
 import haxe.Timer;
 
 import eu.blue112.arttp.sound.Sound;
 import flash.media.SoundTransform;
+import flash.media.SoundChannel;
 
 import caurina.transitions.Tweener;
 
@@ -33,6 +35,10 @@ class Game extends Sprite
 	var waitFrame:Bool;
 	var whiteFlash:Sprite;
 	var curlevel:Int;
+
+	var bgm:SoundChannel;
+
+	var endGame:Bool;
 
 	var map:MapRenderer;
 
@@ -97,6 +103,9 @@ class Game extends Sprite
 
 	private function _tick()
 	{
+		if (endGame)
+			return;
+
 		shake();
 
 		if (map != null)
@@ -129,16 +138,17 @@ class Game extends Sprite
 
 	private function startGame(e:Event):Void
 	{
-		//var s = new Bgm();
-		//s.play(0, 0xFFFF, new SoundTransform(0.3));
+		var s = new Bgm();
+		bgm = s.play(0, 0xFFFF, new SoundTransform(0.3));
 
 		while (numChildren > 0) removeChildAt(0);
 		addChild(mask);
 
 		curlevel = 0;
 
-		tickSound = new Sound();
-		loadLevel(0);
+		loadLevel(curlevel);
+
+		tickSound = new Sound(curlevel);
 	}
 
 	private function unloadLevel():Void
@@ -158,11 +168,14 @@ class Game extends Sprite
 		map = new MapRenderer(id);
 		map.addEventListener(MapRenderer.DEAD, onCharDead);
 		map.addEventListener(MapRenderer.WIN, onLevelWin);
-		addChild(map);
+		addChildAt(map, 0);
 	}
 
 	private function onLevelWin(_)
 	{
+		if (endGame)
+			return;
+
 		curlevel++;
 
 		/*addChild(whiteFlash);
@@ -170,12 +183,100 @@ class Game extends Sprite
 
 		Tweener.addTween(whiteFlash, {delay:1, alpha:0, time:1, transition:"linear", onComplete:callback(removeChild, whiteFlash)});*/
 
+		if (curlevel == 9)
+		{
+			endGame = true;
+
+			addChild(whiteFlash);
+			whiteFlash.alpha = 0;
+
+			for (i in 0...20)
+			{
+				haxe.Timer.delay(callback(shake, Std.random(10) + 5), 250 * i);
+			}
+
+			bgm.stop();
+			var e = new EndTitle();
+			e.play();
+
+			var endText = new PixelTextField("Vous avez gagné", {color:0x000000, size:70});
+			endText.filters = [new GlowFilter(0xFFFFFF, 0.5, 20, 20, 2, 3)];
+			endText.x = (GAME_WIDTH - endText.width) / 2;
+			endText.y = (GAME_HEIGHT - endText.height) / 2;
+			addChild(endText);
+
+			Tweener.addTween(whiteFlash, {delay:0, alpha:1, time:4, transition:"linear"});
+
+			haxe.Timer.delay(onEndEnds, 32000);
+			return;
+		}
+
 		unloadLevel();
 		loadLevel(curlevel);
 	}
 
+	private function onEndEnds():Void
+	{
+		var c = new Char();
+		c.playAnimation(Char.STATIC);
+		c.x = 60;
+		c.y = GAME_HEIGHT - c.height - 10;
+		addChild(c);
+
+		c.say("Bon...");
+		haxe.Timer.delay(callback(c.say, "Y'a quelqu'un ?"), 1000);
+		haxe.Timer.delay(callback(c.say, "Je fais quoi maintenant ?"), 5000);
+		haxe.Timer.delay(callback(c.say, "Et puis coupez moi ce son, quoi !"), 10000);
+		haxe.Timer.delay(callback(c.say, "Alloooooo ?"), 17000);
+		haxe.Timer.delay(callback(shake, 20), 22000);
+		haxe.Timer.delay(callback(c.say, "Allez, on se motive !"), 22000);
+		haxe.Timer.delay(callback(c.say, "On va pas y passer la journée, non ?"), 27000);
+		haxe.Timer.delay(callback(c.say, "Il était sensé y avoir une princesse à la fin."), 32000);
+		haxe.Timer.delay(callback(c.say, "Une vraie princesses, pas celles du royaume des ombres"), 35000);
+		haxe.Timer.delay(callback(c.say, "Bon bon..."), 35000);
+		haxe.Timer.delay(callback(c.say, "Tu es mort "+numberDeath+" fois."), 40000);
+		haxe.Timer.delay(callback(c.say, "Mon commentaire à ce sujet, tu dis ?"), 45000);
+
+		var commentaire =
+			if (numberDeath == 0)
+				"IMPOSSIBRU";
+			else if (numberDeath <= 2)
+				"Digne du prince des ombres";
+			else if (numberDeath <= 5)
+				"Excellent.";
+			else if (numberDeath <= 10)
+				"Très bien !";
+			else if (numberDeath <= 15)
+				"T'as le coup de main, c'est sûr !";
+			else if (numberDeath <= 25)
+				"Pas trop mal, écoute.";
+			else if (numberDeath <= 50)
+				"J'ai déjà vu mieux.";
+			else if (numberDeath <= 75)
+				"Tu me laisseras faire la prochaine fois.";
+			else if (numberDeath <= 150)
+				"C'était pas joli-joli.";
+			else
+				"On va éviter de commenter ce désastre.";
+
+		haxe.Timer.delay(callback(shake, 10), 50000);
+		haxe.Timer.delay(callback(c.say, commentaire), 50000);
+		haxe.Timer.delay(callback(c.say, "Ah et en fait, enchanté, je suis le prince des ombres"), 55000);
+		haxe.Timer.delay(callback(shake, 10), 60000);
+		haxe.Timer.delay(callback(c.say, "Blue."), 60000);
+		haxe.Timer.delay(callback(c.say, "Si tu veux rejouer, actualise ta page."), 65000);
+		haxe.Timer.delay(callback(c.say, "Ravi de t'avoir connu..."), 70000);
+		haxe.Timer.delay(function()
+		{
+			Tweener.addTween(c, {alpha:0, time:3, transition:"linear"});
+		}, 70000);
+	}
+
 	private function onCharDead(_)
 	{
+		if (endGame)
+			return;
+
 		var sentences = [
 			"J'ai pris bien cher",
 			"J'ai vu toute ma vie défiler devant mes yeux, c'était chouette",
