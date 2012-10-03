@@ -41,6 +41,8 @@ class Game extends Sprite
 	var endGame:Bool;
 
 	var map:MapRenderer;
+	var deathCounter:PixelTextField;
+	var numberDeath:Int;
 
 	static private var inst:Game;
 
@@ -147,6 +149,13 @@ class Game extends Sprite
 		curlevel = 0;
 
 		loadLevel(curlevel);
+
+		numberDeath = 0;
+		deathCounter = new PixelTextField("Morts: 000", {color:0x999999, size:25});
+		deathCounter.x = GAME_WIDTH - deathCounter.width - 10;
+		deathCounter.y = (32 - deathCounter.height) / 2;
+		addChild(deathCounter);
+		updateDeathCounter();
 
 		tickSound = new Sound(curlevel);
 	}
@@ -323,29 +332,20 @@ class Game extends Sprite
 		addChild(whiteFlash);
 		whiteFlash.alpha = 1;
 
+		numberDeath++;
+		updateDeathCounter();
+
 		Tweener.addTween(whiteFlash, {alpha:0, time:1, transition:"linear", onComplete:callback(removeChild, whiteFlash)});
 	}
 
-	private function onKeyDown(e:KeyboardEvent):Void
+	private function updateDeathCounter()
 	{
-		if (e.keyCode == flash.ui.Keyboard.SPACE)
-		{
-			if (!manager.is_inited())
-			{
-				manager.init();
-				GrowingText.add("Encore une fois pour démarrer.");
-			}
-			else
-			{
-				var result = manager.check();
-				switch (result)
-				{
-					case GOOD: GrowingText.addColor("Bien !", 0xAEFFB4);
-					case TOO_SOON(diff): GrowingText.addColor("Trop rapide de "+diff+" ms !", 0xFF9F9B);
-					case TOO_LATE(diff): GrowingText.addColor("Trop lent de "+diff+" ms !", 0xFF9F9B);
-				}
-			}
-		}
+		var txt = "<font color='#FFFFFF'>Morts: </font>";
+		var len = Std.string(numberDeath).length;
+		txt += "<font color='#999999'>"+StringTools.lpad("", "0", 3 - len)+"</font>";
+		txt += "<font color='#FFFFFF'>"+numberDeath+"</font>";
+
+		deathCounter.htmlText = txt;
 	}
 
 	static public function main()
