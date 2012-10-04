@@ -28,6 +28,7 @@ class Char extends Sprite
 
 	public var speed:Int;
 	public var saiyanMode:Bool;
+	var saiyanParticules:SaiyanParticulesGenerator;
 
 	var talkText:PixelTextField;
 
@@ -105,11 +106,15 @@ class Char extends Sprite
 
 		if (saiyanMode)
 		{
-			this.filters = [new GlowFilter(0xFFD700, 0.5, 20, 20, 2, 3)];
+			char.filters = [new GlowFilter(0xFFD700, 0.5, 20, 20, 2, 3)];
+			saiyanParticules = new SaiyanParticulesGenerator();
+			saiyanParticules.x = 30;
+			saiyanParticules.y = 75;
+			addChildAt(saiyanParticules, 0);
 		}
 		else
 		{
-			this.filters = [];
+			char.filters = [];
 		}
 	}
 
@@ -146,6 +151,7 @@ class Char extends Sprite
 	private function disable(_)
 	{
 		removeEventListener(Event.ENTER_FRAME, animate);
+		saiyanParticules.stop();
 	}
 
 	public function playAnimation(direction:String):Void

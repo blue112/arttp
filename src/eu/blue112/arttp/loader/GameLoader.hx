@@ -11,6 +11,7 @@ import eu.blue112.arttp.display.PixelTextField;
 import eu.blue112.arttp.engine.KeyManager;
 
 import caurina.transitions.Tweener;
+import flash.filters.GlowFilter;
 
 
 class GameLoader extends Sprite
@@ -34,6 +35,7 @@ class GameLoader extends Sprite
 		char.x = stage.stageWidth * 0.1;
 		char.y = (stage.stageHeight - char.height) / 2;
 		char.playAnimation(Char.RIGHT);
+		char.filters = [new GlowFilter(0xFFFFFF, 0.2, 10, 10, 2, 3)];
 
 		percent = new PixelTextField("00%", {color:0xFFFFFF, size:50});
 		percent.x = (stage.stageWidth - percent.width) / 2;
