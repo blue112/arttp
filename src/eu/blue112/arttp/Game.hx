@@ -216,7 +216,28 @@ class Game extends Sprite
 
 			Tweener.addTween(whiteFlash, {delay:0, alpha:1, time:4, transition:"linear"});
 
-			haxe.Timer.delay(onEndEnds, 32000);
+			var countDown = new PixelTextField("30", {size:70, color:0x000000});
+			countDown.x = 60;
+			countDown.filters = [new GlowFilter(0xFFD700, 0.5, 20, 20, 2, 3)];
+			countDown.y = GAME_HEIGHT - countDown.height - 10;
+			addChild(countDown);
+
+			var cd = 30;
+
+			var t = new haxe.Timer(1000);
+			t.run = function()
+			{
+				cd--;
+				countDown.text = StringTools.lpad(Std.string(cd), "0", 2);
+
+				if (cd <= 0)
+				{
+					t.stop();
+					removeChild(countDown);
+				}
+			}
+
+			haxe.Timer.delay(onEndEnds, 31000);
 			return;
 		}
 
@@ -241,10 +262,10 @@ class Game extends Sprite
 		haxe.Timer.delay(callback(c.say, "Allez, on se motive !"), 22000);
 		haxe.Timer.delay(callback(c.say, "On va pas y passer la journée, non ?"), 27000);
 		haxe.Timer.delay(callback(c.say, "Il était sensé y avoir une princesse à la fin."), 32000);
-		haxe.Timer.delay(callback(c.say, "Une vraie princesses, pas celles du royaume des ombres"), 35000);
-		haxe.Timer.delay(callback(c.say, "Bon bon..."), 35000);
-		haxe.Timer.delay(callback(c.say, "Tu es mort "+numberDeath+" fois."), 40000);
-		haxe.Timer.delay(callback(c.say, "Mon commentaire à ce sujet, tu dis ?"), 45000);
+		haxe.Timer.delay(callback(c.say, "Une vraie princesse, pas celles du royaume des ombres..."), 35000);
+		haxe.Timer.delay(callback(c.say, "Bon, bon..."), 38000);
+		haxe.Timer.delay(callback(c.say, "Tu es mort "+numberDeath+" fois."), 42000);
+		haxe.Timer.delay(callback(c.say, "Mon commentaire à ce sujet, tu dis ?"), 46000);
 
 		var commentaire =
 			if (numberDeath == 0)
@@ -293,7 +314,6 @@ class Game extends Sprite
 			"J'espère que je fais pas tout ca pour rien",
 			"L'enfoiré qui m'a mis là dedans...",
 			"Je déteste ce niveau",
-			//"Mais d'où ils viennent ces monstres ?",
 			"Y a pas des cheat codes ?",
 			"Moi qui pensait que ce serait facile",
 			"C'est reparti pour un tour...",
