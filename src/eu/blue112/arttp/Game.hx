@@ -4,6 +4,7 @@ import flash.display.Sprite;
 import flash.display.Shape;
 import flash.events.KeyboardEvent;
 import flash.events.Event;
+import flash.events.TimerEvent;
 import flash.filters.GlowFilter;
 
 import haxe.Timer;
@@ -56,7 +57,6 @@ class Game extends Sprite
 	private function init()
 	{
 		flash.Lib.current.addChild(this);
-
 		inst = this;
 
 		var gameMask = new Shape();
@@ -118,24 +118,25 @@ class Game extends Sprite
 
 	private function shake(?force:Int = 1)
 	{
-		x += 2 * force;
-		y += 2 * force;
+		var it = 0;
 
-		waitFrame = true;
-		addEventListener(Event.ENTER_FRAME, backToNormal);
-	}
+		var shakeTimer = new flash.utils.Timer(10); //Using native timer for updateAfterEvent
+		shakeTimer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent)
+		{
+			it++;
 
-	private function backToNormal(_)
-	{
-		if (waitFrame)
-		{
-			waitFrame = false;
-		}
-		else
-		{
-			onResize(null);
-			removeEventListener(Event.ENTER_FRAME, backToNormal);
-		}
+			x += 5;
+			y += 5;
+
+			if (it > 1)
+			{
+				shakeTimer.stop();
+				onResize(null);
+			}
+
+			e.updateAfterEvent();
+		});
+		shakeTimer.start();
 	}
 
 	private function startGame(e:Event):Void
@@ -198,11 +199,6 @@ class Game extends Sprite
 
 			addChild(whiteFlash);
 			whiteFlash.alpha = 0;
-
-			for (i in 0...20)
-			{
-				haxe.Timer.delay(callback(shake, Std.random(10) + 5), 250 * i);
-			}
 
 			bgm.stop();
 			var e = new EndTitle();
