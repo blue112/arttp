@@ -169,7 +169,7 @@ class Char extends Sprite
 
 	private function animate(e:Event):Void
 	{
-		hitbox.visible = KeyManager.isDown(Keyboard.CONTROL);
+		//hitbox.visible = KeyManager.isDown(Keyboard.CONTROL);
 
 		if (currentDirection == STATIC)
 			return;
