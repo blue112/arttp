@@ -16,8 +16,6 @@ class Sound
 	public var tickOn:Int;
 	public var current:Int;
 
-	static public inline var LN2 = 0.6931471805599453;
-
 	public function new(level:Int)
 	{
 		var sound = new flash.media.Sound();
@@ -98,3 +96,6 @@ class EndTitle extends flash.media.Sound {}
 
 @:sound("lib/sfx/death.wav")
 class DeathSnd extends flash.media.Sound {}
+
+@:sound("lib/sfx/saiyanmode.wav")
+class SaiyanModeSnd extends flash.media.Sound {}

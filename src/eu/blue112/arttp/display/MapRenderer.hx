@@ -3,6 +3,7 @@ package eu.blue112.arttp.display;
 import eu.blue112.arttp.engine.Permutations;
 import eu.blue112.arttp.engine.CollisionManager;
 import eu.blue112.arttp.engine.KeyManager;
+import eu.blue112.arttp.sound.Sound;
 
 import haxe.xml.Fast;
 
@@ -76,6 +77,7 @@ class MapRenderer extends Sprite
 
 			var pt = tmxmap.pointFromTile(STARTING_COORD.x, STARTING_COORD.y);
 			char.setPointFromCenter(pt);
+			char.addEventListener(Char.ON_SAIYAN_MODE, onSaiyanMode);
 
 			addEventListener(Event.ENTER_FRAME, moveChar);
 
@@ -95,6 +97,11 @@ class MapRenderer extends Sprite
 
 			initLasers();
 		}
+	}
+
+	private function onSaiyanMode(_):Void
+	{
+		new SaiyanModeSnd().play();
 	}
 
 	private function initLasers()

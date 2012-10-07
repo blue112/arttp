@@ -8,7 +8,6 @@ import flash.net.URLRequest;
 
 import eu.blue112.arttp.display.Char;
 import eu.blue112.arttp.display.PixelTextField;
-import eu.blue112.arttp.engine.KeyManager;
 
 import caurina.transitions.Tweener;
 import flash.filters.GlowFilter;
@@ -26,8 +25,6 @@ class GameLoader extends Sprite
 
 		stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 		stage.align = flash.display.StageAlign.TOP_LEFT;
-
-		new KeyManager(); //Init KeyManager
 
 		char = new Char();
 		stage.addChild(char);

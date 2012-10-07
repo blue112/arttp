@@ -1,5 +1,6 @@
 -main eu.blue112.arttp.Game
 -cp src
+-D main
 -swf-header 800:600:30:000000
 -swf-lib lib/gfx/font.swf
 -swf-lib lib/soundlib.swf

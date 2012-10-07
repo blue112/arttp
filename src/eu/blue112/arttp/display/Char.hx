@@ -11,7 +11,9 @@ import flash.geom.Rectangle;
 
 import caurina.transitions.Tweener;
 
-import eu.blue112.arttp.engine.KeyManager;
+#if main
+import eu.blue112.arttp.sound.Sound;
+#end
 
 @:bitmap("lib/gfx/main_char.png")
 class CharGfx extends BitmapData {}
@@ -39,6 +41,8 @@ class Char extends Sprite
 	static public var DOWN:String = "down";
 	static public var UP:String = "up";
 	static public var STATIC:String = "static";
+
+	static public var ON_SAIYAN_MODE:String = "event_on_saiyan_mode"; //For playing sound
 
 	static public var CENTER_POINT:Point = new Point(10, 45);
 
@@ -111,6 +115,8 @@ class Char extends Sprite
 			saiyanParticules.x = 30;
 			saiyanParticules.y = 75;
 			addChildAt(saiyanParticules, 0);
+
+			dispatchEvent(new Event(ON_SAIYAN_MODE));
 		}
 		else
 		{
@@ -151,7 +157,9 @@ class Char extends Sprite
 	private function disable(_)
 	{
 		removeEventListener(Event.ENTER_FRAME, animate);
-		saiyanParticules.stop();
+
+		if (saiyanParticules != null)
+			saiyanParticules.stop();
 	}
 
 	public function playAnimation(direction:String):Void
