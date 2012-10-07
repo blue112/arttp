@@ -562,6 +562,7 @@
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
+   <tile gid="40"/>
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
@@ -571,7 +572,6 @@
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
-   <tile gid="50"/>
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
@@ -579,7 +579,7 @@
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
-   <tile gid="50"/>
+   <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
@@ -673,7 +673,7 @@
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="68"/>
-   <tile gid="0"/>
+   <tile gid="20"/>
    <tile gid="67"/>
    <tile gid="20"/>
    <tile gid="20"/>
@@ -896,15 +896,6 @@
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
-   <tile gid="40"/>
-   <tile gid="20"/>
-   <tile gid="20"/>
-   <tile gid="20"/>
-   <tile gid="20"/>
-   <tile gid="20"/>
-   <tile gid="20"/>
-   <tile gid="20"/>
-   <tile gid="40"/>
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
@@ -913,6 +904,15 @@
    <tile gid="20"/>
    <tile gid="20"/>
    <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="50"/>
   </data>
  </layer>
 </map>
