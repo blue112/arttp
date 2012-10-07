@@ -95,3 +95,6 @@ class Bgm extends flash.media.Sound {}
 
 @:sound("lib/sfx/endtitle.mp3")
 class EndTitle extends flash.media.Sound {}
+
+@:sound("lib/sfx/death.wav")
+class DeathSnd extends flash.media.Sound {}

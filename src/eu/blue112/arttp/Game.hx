@@ -342,6 +342,8 @@ class Game extends Sprite
 
 		var text = sentences[Std.random(sentences.length)];
 
+		new DeathSnd().play(0, 1, new SoundTransform(0.5));
+
 		map.char.say(text);
 
 		shake(10);
